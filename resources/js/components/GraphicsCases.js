@@ -3,8 +3,6 @@ import {Bar} from 'react-chartjs-2';
 import '../../assets/css/Graphics.css';
 
 function Graphics(props) {
-    console.log(props.data,'aca');
-    console.log(props.data1,'aqui');
     const data={
         labels: JSON.parse(JSON.stringify(props.data)),
         tittle: JSON.parse(JSON.stringify(props.data)),

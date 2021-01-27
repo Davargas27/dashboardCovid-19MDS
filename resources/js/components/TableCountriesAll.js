@@ -154,11 +154,6 @@ import useHistory, {Link} from 'use-history'
           setSelected([]);
         };
 
-        const handleClick = (event, name) => {
-
-          //history.push('/dashboardCountrie/${name}');
-          window.location("/dashboardCountrie/"+name)
-        };
 
         const handleChangePage = (event, newPage) => {  setPage(newPage); };
         const handleChangeRowsPerPage = (event) => {  setRowsPerPage(parseInt(event.target.value, 10)); setPage(0);};
@@ -197,7 +192,6 @@ import useHistory, {Link} from 'use-history'
                             return (
                             <TableRow
                                 hover
-                                onClick={(event) => handleClick(event, row.name)}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}

@@ -22,6 +22,7 @@ class ComponenteCountries extends Component {
 
         this.countries = [];
 
+        /* Arrays para guardar data ''= Cases , R= recovered ,D= death */
         this.all1 = [];
         this.all2 = [];
         this.new1 = [];
@@ -36,13 +37,15 @@ class ComponenteCountries extends Component {
         this.allTable = [];
 
 
+        /* Variable global para consumo de api, cantidadData='cuantos dias desea traer en la consulta' */
         this.service = 'https://disease.sh/v3/covid-19/';
+        this.cantidadData = 30;
     }
 
     async getData(url) {
         const res = await axios(this.service+url);
 
-        return await res.data; // (Or whatever)
+        return await res.data;
     }
 
     async componentDidMount() {
@@ -63,7 +66,7 @@ class ComponenteCountries extends Component {
                 }) .catch(err => {console.log('este es el error ', err)});
 
             /* servicio que trae todos los casos por dias  */
-            this.getData('historical?lastdays=60').then(data =>{
+            this.getData('historical?lastdays='+this.cantidadData).then(data =>{
 
                 data.forEach(element => {
                     if(element.country == this.props.data){
@@ -124,6 +127,7 @@ class ComponenteCountries extends Component {
                 this.setState(this.allD1)
                 this.setState(this.allD2)
                 this.setState(this.newD1)
+
             }) .catch(err => {console.log('este es el error ', err)});
         }
     }
@@ -134,20 +138,21 @@ class ComponenteCountries extends Component {
     render() {
         return (
             <div ><br></br>
+                {/* Se pinta cada uno de la grilla y se importa los repectivos js para hacer llamado y pintarlos con la data enviada */}
                 <div> <Button href="/" color="primary" size="small"> VOLVER  </Button></div>
                 <Grid container spacing={3}  justify = "center" alignItems="center">
                     <Grid item xs={8} >
                         <h2 align="center">{this.props.data}</h2>
                     </Grid>
-                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6} >
+                    <Grid item xs={6} sm={6} md={5} lg={5} xl={5}>
                         <h3 align="center">NER CASES PER DAY</h3>
                         <GraphicsCases data={this.all1} data1={this.all2} data2={this.new1}/>
                     </Grid>
-                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6} >
+                    <Grid item xs={6} sm={6} md={5} lg={5} xl={5}>
                         <h3 align="center">PATIENT RECOVERED PER DAY</h3>
                         <GraphicsRecovered data={this.allR1} data1={this.allR2} data2={this.newR1}/>
                     </Grid>
-                    <Grid item xs={8} sm={8} md={8} lg={8} xl={8} >
+                    <Grid item xs={8} sm={8} md={5} lg={5} xl={5} >
                         <h3 align="center">DEATHS PER DAY</h3>
                         <GraphicsDeath data={this.allD1} data1={this.allD2} data2={this.newD1}/>
                     </Grid>

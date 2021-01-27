@@ -19,8 +19,13 @@ class Componente extends Component {
     constructor(props) {
         super(props);
         this.state = {data: null};
+
+
+        /* Variable global para consumo de api, countries='todos los nombres de los paises', countriesAll='todos los paises con sus respectivos datos' */
         this.countries = [];
         this.countriesAll = [];
+
+        /* Arrays para guardar data ''= Cases , R= recovered ,D= death */
         this.all1 = [];
         this.all2 = [];
         this.new1 = [];
@@ -35,7 +40,9 @@ class Componente extends Component {
         this.allTable = [];
 
 
+        /* Variable global para consumo de api, cantidadData='cuantos dias desea traer en la consulta' */
         this.service = 'https://disease.sh/v3/covid-19/';
+        this.cantidadData = 30;
     }
 
     async getData(url) {
@@ -72,7 +79,7 @@ class Componente extends Component {
                 }) .catch(err => {console.log('este es el error ', err)});
 
             /* servicio que trae todos los casos por dias  */
-            this.getData('historical/all?lastdays=15').then(data =>{
+            this.getData('historical/all?lastdays='+this.cantidadData).then(data =>{
                 /* grafica nuevos casos */
                     var keysC=Object.keys(data.cases);
                     var valuesC=Object.values(data.cases);
@@ -110,6 +117,8 @@ class Componente extends Component {
                         const dataA={ date, cases, Ncases, recovered ,Nrecovered,deaths,Ndeaths};
                         this.allTable.push(dataA);
                     }
+                    this.setState(this.allTable)
+
 
             }) .catch(err => {console.log('este es el error ', err)});
         }
@@ -121,6 +130,7 @@ class Componente extends Component {
     render() {
         return (
             <div >
+                {/* Se pinta cada uno de la grilla y se importa los repectivos js para hacer llamado y pintarlos con la data enviada */}
                 <Grid container spacing={3}  justify = "center" alignItems="center">
                     <Grid item xs={8} >
                         <h3 align="center">COUNTRIES</h3>

@@ -50,8 +50,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ScrollableTabsButtonAuto(props) {
-
-    console.log(props.data.cases,'aqui2');
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -71,6 +69,7 @@ export default function ScrollableTabsButtonAuto(props) {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
+        {/* Se hace validación de que pagina viene para mostrar titulo respectivo*/}
         {props.value == 0?(
              <Tab label="List by country" {...a11yProps(0)} />
              ) :
